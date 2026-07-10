@@ -1,7 +1,7 @@
 [project]
-name = "llamacpp-unloader"
+name = "ComfyUI-llamacpp-Unloader"
 description = "Unload llama.cpp models from VRAM to free GPU memory in ComfyUI."
-version = "1.0.1"
+version = "1.0.2"
 license = "LICENSE"
 
 [project.urls]

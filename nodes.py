@@ -4,6 +4,8 @@ from comfy_api.latest import ComfyExtension, io, ui
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+DEFAULT_LLAMA_API = "http://host.docker.internal:8081"
+
 
 class LlamaCppUnloader(io.ComfyNode):
     """Unload llama.cpp models from VRAM."""
@@ -15,8 +17,8 @@ class LlamaCppUnloader(io.ComfyNode):
             display_name="Unload llama.cpp Models",
             category="system/VRAM",
             inputs=[
-                io.String.Input("llama_api"),
-                io.String.Input("exclude_models", multiline=True, default=""),
+                io.String.Input(id="llama_api", display_name="API URL", default=DEFAULT_LLAMA_API),
+                io.String.Input(id="exclude_models", display_name="Excluded models", multiline=True, default=""),
             ],
             outputs=[
                 io.Boolean.Output("success"),
@@ -33,8 +35,6 @@ class LlamaCppUnloader(io.ComfyNode):
 
     @classmethod
     async def execute(cls, llama_api, exclude_models="") -> io.NodeOutput:
-        DEFAULT_LLAMA_API = "http://host.docker.internal:8081"
-        
         exclude_ids = set()
         if exclude_models.strip():
             for line in exclude_models.split("\n"):
@@ -87,7 +87,3 @@ class LlamaCppUnloader(io.ComfyNode):
 class ComfyUILlamaCppUnloaderExtension(ComfyExtension):
     async def get_node_list(self) -> list[type[io.ComfyNode]]:
         return [LlamaCppUnloader]
-
-
-async def comfy_entrypoint() -> ComfyExtension:
-    return ComfyUILlamaCppUnloaderExtension()

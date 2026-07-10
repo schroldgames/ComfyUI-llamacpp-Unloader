@@ -1,3 +1,4 @@
-from .nodes import LlamaCppUnloader  # noqa: F401
+from .nodes import ComfyUILlamaCppUnloaderExtension
 
-WEB_DIRECTORY = "./js"  # optional: frontend JS extensions
+async def comfy_entrypoint() -> ComfyUILlamaCppUnloaderExtension:
+    return ComfyUILlamaCppUnloaderExtension()
