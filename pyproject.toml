@@ -1,0 +1,12 @@
+[project]
+name = "llamacpp-unloader"
+description = "Unload llama.cpp models from VRAM to free GPU memory in ComfyUI."
+version = "1.0.1"
+license = "LICENSE"
+
+[project.urls]
+Repository = "https://github.com/schroldgames/ComfyUI-llamacpp-Unloader"
+
+[tool.comfy]
+PublisherId = "schroldgames"
+DisplayName = "ComfyUI-llamacpp-Unloader"
