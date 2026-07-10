@@ -43,7 +43,7 @@ class LlamaCppUnloader(io.ComfyNode):
                     exclude_ids.add(line)
 
         try:
-            resp = requests.get(f"{llama_api}", timeout=5, verify=False)
+            resp = requests.get(f"{llama_api}/models", timeout=5, verify=False)
 
             if resp.status_code != 200:
                 msg = f"GET /models failed: {resp.text[:100]}"
@@ -65,6 +65,7 @@ class LlamaCppUnloader(io.ComfyNode):
         for model in loaded:
             model_id = model.get("id", "")
             if model_id and any(model_id == eid for eid in exclude_ids):
+                results.append(f"'{model_id}' → SKIPPED")
                 continue
             try:
                 unld = requests.post(
